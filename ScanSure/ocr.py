@@ -116,5 +116,53 @@ def process_image(image_path):
     }
     return data
 
+
+def process_images(image_paths_list):
+    """
+    Process multiple images (e.g. front + back of a label) and merge their
+    OCR results into one unified dict.
+    
+    Strategy:
+      - Scalar fields (brand, product, barcode, batch): first non-None value wins.
+      - Ingredients: union across all images (deduplicated, case-insensitive).
+      - raw_text: concatenated with a separator.
+    """
+    merged = {
+        "brand": None,
+        "product": None,
+        "ingredients": [],
+        "barcode": None,
+        "batch": None,
+        "raw_text": ""
+    }
+
+    seen_ingredients = set()
+
+    for path in image_paths_list:
+        try:
+            data = process_image(path)
+        except Exception:
+            continue  # skip unreadable images, don't crash the whole scan
+
+        # Scalar fields: take first non-None value found across images
+        for field in ("brand", "product", "barcode", "batch"):
+            if merged[field] is None and data.get(field):
+                merged[field] = data[field]
+
+        # Ingredients: union, deduplicated
+        for ing in (data.get("ingredients") or []):
+            key = ing.strip().lower()
+            if key and key not in seen_ingredients:
+                seen_ingredients.add(key)
+                merged["ingredients"].append(ing)
+
+        # raw_text: concatenate (back label often has ingredients text)
+        if data.get("raw_text"):
+            separator = "\n--- [next image] ---\n" if merged["raw_text"] else ""
+            merged["raw_text"] += separator + data["raw_text"]
+
+    return merged
+
+
 if __name__ == "__main__":
     pass

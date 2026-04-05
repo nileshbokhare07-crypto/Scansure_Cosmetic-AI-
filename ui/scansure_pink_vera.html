@@ -173,6 +173,217 @@
       color: var(--deep);
     }
 
+    /* ── HISTORY DRAWER ── */
+    .hist-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(61,26,46,.45);
+      backdrop-filter: blur(8px);
+    }
+    .hist-overlay.open { display: block; }
+
+    .hist-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(520px, 100vw);
+      height: 100%;
+      background: var(--cream);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -24px 0 60px rgba(61,26,46,.18);
+      transform: translateX(100%);
+      transition: transform .32s cubic-bezier(.4,0,.2,1);
+    }
+    .hist-overlay.open .hist-drawer {
+      transform: translateX(0);
+    }
+
+    .hist-head {
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--bdim);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .hist-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--deep);
+      letter-spacing: 1px;
+      flex: 1;
+    }
+    .hist-count {
+      font-size: 11px;
+      background: var(--glow);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+      color: var(--rose);
+      font-weight: 700;
+    }
+    .hist-head-btns {
+      display: flex;
+      gap: 6px;
+    }
+    .hist-ico-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--bdim);
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .hist-ico-btn:hover { background: var(--glow); color: var(--rose); border-color: var(--border); }
+
+    .hist-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bdim) transparent;
+    }
+
+    .hist-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+    }
+    .hist-spinner {
+      text-align: center;
+      padding: 40px;
+      color: var(--rose);
+      font-size: 22px;
+      animation: progpulse 1s infinite;
+    }
+
+    /* Scan record card */
+    .hrec {
+      background: var(--s1);
+      border: 1px solid var(--bdim);
+      border-radius: 13px;
+      overflow: hidden;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      animation: mi .22s ease;
+      cursor: pointer;
+    }
+    .hrec:hover {
+      border-color: var(--border);
+      box-shadow: 0 4px 18px rgba(232,105,154,.12);
+      transform: translateY(-1px);
+    }
+    .hrec:hover .hrec-view-hint { opacity: 1; }
+    .hrec.real { border-left: 3px solid rgba(34,197,94,.5); }
+    .hrec.fake { border-left: 3px solid rgba(239,68,68,.5); }
+
+    .hrec-head {
+      padding: 10px 13px 8px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .hrec-badge {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      flex-shrink: 0;
+    }
+    .hrec-badge.real { background: rgba(34,197,94,.15); color: #166534; }
+    .hrec-badge.fake { background: rgba(239,68,68,.15); color: #991b1b; }
+    .hrec-badge.unknown { background: var(--bdim); color: var(--muted); }
+
+    .hrec-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--deep);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hrec-conf {
+      font-size: 10.5px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .hrec-view-hint {
+      font-size: 10px;
+      color: var(--rose);
+      opacity: 0;
+      transition: opacity .2s;
+      flex-shrink: 0;
+      font-weight: 700;
+      letter-spacing: .3px;
+    }
+
+    .hrec-body {
+      padding: 0 13px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hrec-row {
+      display: flex;
+      gap: 5px;
+      font-size: 11.5px;
+      align-items: baseline;
+    }
+    .hrec-lbl {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      min-width: 60px;
+    }
+    .hrec-val {
+      color: var(--deep);
+      word-break: break-all;
+    }
+    .hrec-val.missing { color: var(--muted); font-style: italic; opacity:.55; }
+
+    .hrec-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 3px;
+    }
+    .hrec-chip {
+      padding: 2px 7px;
+      border-radius: 20px;
+      background: rgba(232,105,154,.1);
+      border: 1px solid rgba(232,105,154,.2);
+      font-size: 9.5px;
+      color: var(--deep);
+    }
+    .hrec-time {
+      font-size: 9.5px;
+      color: var(--muted);
+      opacity: .6;
+      padding: 0 13px 8px;
+    }
+
     /* ── LAYOUT ── */
     .layout {
       flex: 1;
@@ -677,7 +888,9 @@
       padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bdim) transparent;
     }
 
     .slabel {
@@ -688,14 +901,53 @@
       line-height: 1.7;
     }
 
+    /* ── DUAL UPLOAD SLOTS ── */
+    .upload-slots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .upload-slot {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slot-label {
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      padding-left: 2px;
+    }
+
+    .slot-label span {
+      display: inline-block;
+      margin-right: 4px;
+    }
+
     .upload-box {
-      border: 1.5px dashed rgba(232, 105, 154, .35);
-      border-radius: 13px;
-      padding: 26px 20px;
+      border: 1.5px dashed rgba(232, 105, 154, .4);
+      border-radius: 14px;
+      padding: 18px 10px;
       text-align: center;
       cursor: pointer;
       transition: all .25s;
       background: var(--glow);
+      position: relative;
+      min-height: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upload-box.drag-over {
+      border-color: var(--rose);
+      background: rgba(232, 105, 154, .12);
+      transform: scale(1.01);
     }
 
     .upload-box:hover {
@@ -703,66 +955,323 @@
       background: rgba(232, 105, 154, .08);
     }
 
+    .upload-box.has-image {
+      border-color: var(--rose);
+      background: rgba(232, 105, 154, .06);
+    }
+
     .upload-ico {
-      font-size: 30px;
+      font-size: 22px;
       display: block;
-      margin-bottom: 9px;
+      margin-bottom: 5px;
     }
 
     .upload-t {
-      font-size: 13px;
+      font-size: 11.5px;
       color: var(--muted);
+      font-weight: 600;
     }
 
-    .res-card {
+    .upload-sub {
+      font-size: 10px;
+      color: var(--muted);
+      opacity: .5;
+      margin-top: 2px;
+    }
+
+    /* Slot preview thumbnail */
+    .slot-preview {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--bdim);
       display: none;
-      border-radius: 13px;
-      padding: 16px;
-      border: 1px solid var(--border);
-      font-size: 13.5px;
-      line-height: 1.6;
     }
 
-    .res-card.real {
-      background: rgba(34, 197, 94, .07);
-      border-color: rgba(34, 197, 94, .25);
-      color: #166534;
+    .slot-preview img {
+      width: 100%;
+      display: block;
+      max-height: 110px;
+      object-fit: cover;
     }
 
-    .res-card.fake {
-      background: rgba(239, 68, 68, .07);
-      border-color: rgba(239, 68, 68, .25);
-      color: #991b1b;
+    .slot-preview-clear {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(61,26,46,.7);
+      border: none;
+      color: white;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
     }
 
-    .res-card.chk {
-      background: var(--glow);
-      border-color: var(--border);
-      color: var(--muted);
-    }
-
-    .verd {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      letter-spacing: 1px;
-      margin-bottom: 7px;
-    }
-
-    .reas {
-      font-size: 12.5px;
-      opacity: .85;
-    }
-
+    /* Legacy single sprev kept for chat tab compat */
     .sprev {
       display: none;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--bdim);
+      position: relative;
     }
 
     .sprev img {
       width: 100%;
       display: block;
+      max-height: 160px;
+      object-fit: cover;
+    }
+
+    .sprev-rescan {
+      position: absolute;
+      bottom: 7px;
+      right: 7px;
+      background: rgba(253,240,244,.92);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--deep);
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      transition: all .2s;
+    }
+
+    .sprev-rescan:hover { background: var(--glow); color: var(--rose); }
+
+    /* Scan Now button */
+    .scan-now-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--rose), #c04575);
+      border: none;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      letter-spacing: .5px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(232,105,154,.4);
+      transition: all .2s;
+      display: none;
+    }
+
+    .scan-now-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(232,105,154,.6);
+    }
+
+    .scan-now-btn.visible { display: block; }
+
+    /* Scanning progress bar */
+    .scan-progress {
+      display: none;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .scan-progress.show { display: flex; }
+
+    .scan-prog-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      animation: progpulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes progpulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .scan-bar-track {
+      height: 3px;
+      background: var(--bdim);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .scan-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--rose2), var(--rose));
+      border-radius: 4px;
+      animation: barslide 1.8s ease-in-out infinite;
+    }
+
+    @keyframes barslide {
+      0%{width:0%;margin-left:0} 50%{width:60%;margin-left:20%} 100%{width:0%;margin-left:100%}
+    }
+
+    /* Result card */
+    .res-card {
+      display: none;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      font-size: 13px;
+      animation: mi .3s ease;
+    }
+
+    .res-card.real { border-color: rgba(34,197,94,.3); }
+    .res-card.fake { border-color: rgba(239,68,68,.3); }
+    .res-card.chk  { border-color: var(--border); }
+
+    .res-header {
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .res-card.real .res-header { background: rgba(34,197,94,.09); }
+    .res-card.fake .res-header { background: rgba(239,68,68,.09); }
+    .res-card.chk  .res-header { background: var(--glow); }
+
+    .res-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .res-card.real .res-icon { background: rgba(34,197,94,.18); }
+    .res-card.fake .res-icon { background: rgba(239,68,68,.18); }
+    .res-card.chk  .res-icon { background: var(--bdim); }
+
+    .verd {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      letter-spacing: .5px;
+      font-weight: 600;
+    }
+
+    .res-card.real .verd { color: #166534; }
+    .res-card.fake .verd { color: #991b1b; }
+    .res-card.chk  .verd { color: var(--muted); }
+
+    .reas {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 1px;
+      line-height: 1.5;
+    }
+
+    /* Detail rows */
+    .res-details {
+      padding: 10px 15px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(253,240,244,.6);
+      max-height: 340px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bdim) transparent;
+    }
+
+    .det-section-title {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+      opacity: .7;
+    }
+
+    .det-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .det-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      width: 18px;
+      text-align: center;
+    }
+
+    .det-content { flex: 1; min-width: 0; }
+
+    .det-label {
+      font-size: 10px;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: .7;
+      margin-bottom: 1px;
+    }
+
+    .det-value {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--deep);
+      word-break: break-word;
+      line-height: 1.5;
+    }
+
+    .det-value.missing {
+      color: var(--muted);
+      font-style: italic;
+      font-weight: 400;
+      opacity: .6;
+    }
+
+    /* Ingredient chips */
+    .ing-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .ing-chip {
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: rgba(232,105,154,.1);
+      border: 1px solid rgba(232,105,154,.2);
+      font-size: 10.5px;
+      color: var(--deep);
+      font-weight: 500;
+    }
+
+    .res-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--bdim), transparent);
+      margin: 2px 0;
+    }
+
+    /* Scan again btn */
+    .scan-again-btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--rose);
+      font-family: 'Nunito', sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: .3px;
+      cursor: pointer;
+      transition: all .2s;
+      display: none;
+    }
+
+    .scan-again-btn:hover {
+      background: var(--glow);
+      border-color: var(--rose);
     }
 
     /* TASKS tab */
@@ -942,10 +1451,27 @@
       </div>
     </div>
     <div class="hdr-right">
+      <button class="hbtn" onclick="openHistory()">🗞️ View All Scans</button>
       <button class="hbtn" id="vbtn" onclick="toggleVoice()">🔊 Voice On</button>
-      <button class="hbtn" id="abtn" onclick="openModal()">✦ Add API Key</button>
     </div>
   </header>
+  <!-- HISTORY DRAWER -->
+  <div class="hist-overlay" id="histOverlay" onclick="closeHistoryOnBg(event)">
+    <div class="hist-drawer">
+      <div class="hist-head">
+        <h2>✦ Scan History</h2>
+        <span class="hist-count" id="histCount">— records</span>
+        <div class="hist-head-btns">
+          <button class="hist-ico-btn" title="Refresh" onclick="fetchHistory()">🔄</button>
+          <button class="hist-ico-btn" title="Download JSON" onclick="downloadHistory()">⬇</button>
+          <button class="hist-ico-btn" title="Close" onclick="closeHistory()">✕</button>
+        </div>
+      </div>
+      <div class="hist-body" id="histBody">
+        <div class="hist-empty">Click 🔄 to load scan records from the database…</div>
+      </div>
+    </div>
+  </div>
 
   <!-- LAYOUT -->
   <div class="layout">
@@ -1162,9 +1688,9 @@
         <div class="inp-row">
           <label class="sbtn"
             style="background: transparent; border: 1px solid var(--border); color: var(--deep); box-shadow: none; cursor: pointer; text-align: center; line-height: 38px; display: block; padding: 0;"
-            title="Upload Product Photo">
+            title="Upload Product Photos (select multiple)">
             📷
-            <input type="file" accept="image/*" style="display:none" onchange="doScan(event)">
+            <input type="file" accept="image/*" multiple style="display:none" onchange="doChatMultiScan(event)">
           </label>
           <input class="cin" id="cin" placeholder="Ask Vera anything…" onkeydown="if(event.key==='Enter')sendChat()">
           <button class="sbtn" onclick="sendChat()">➤</button>
@@ -1174,22 +1700,86 @@
       <!-- SCAN -->
       <div class="tc" id="tc-scan">
         <div class="scan-inner">
-          <p class="slabel">Upload a photograph of any cosmetic product. Vera will examine the packaging, labels and
-            seals to determine its authenticity.</p>
-          <div class="upload-box" onclick="document.getElementById('sfile').click()">
-            <span class="upload-ico">✦</span>
-            <div class="upload-t">Upload product photograph</div>
-            <div style="font-size:11px;color:var(--muted);opacity:.5;margin-top:4px">JPG · PNG · WEBP</div>
+
+          <!-- Dual upload slots: Front + Back -->
+          <div id="uploadArea">
+            <p class="slabel" style="margin-bottom:8px">Upload the product's front &amp; back label for a complete scan.</p>
+            <div class="upload-slots">
+
+              <!-- SLOT: Front -->
+              <div class="upload-slot">
+                <div class="slot-label"><span>📷</span> Front</div>
+                <div class="upload-box" id="boxFront"
+                  onclick="document.getElementById('sfileFront').click()"
+                  ondragover="event.preventDefault();this.classList.add('drag-over')"
+                  ondragleave="this.classList.remove('drag-over')"
+                  ondrop="this.classList.remove('drag-over');handleSlotDrop(event,'front')">
+                  <span class="upload-ico">🖼️</span>
+                  <div class="upload-t">Front label</div>
+                  <div class="upload-sub">Click or drop</div>
+                </div>
+                <input type="file" id="sfileFront" accept="image/*" style="display:none"
+                  onchange="setSlotImage('front', this.files[0]); this.value='';">
+                <!-- Per-slot preview -->
+                <div class="slot-preview" id="prevFront">
+                  <img id="imgFront" alt="front preview">
+                  <button class="slot-preview-clear" onclick="clearSlot('front')" title="Remove">✕</button>
+                </div>
+              </div>
+
+              <!-- SLOT: Back -->
+              <div class="upload-slot">
+                <div class="slot-label"><span>🔄</span> Back <span style="opacity:.5;font-size:9px">(optional)</span></div>
+                <div class="upload-box" id="boxBack"
+                  onclick="document.getElementById('sfileBack').click()"
+                  ondragover="event.preventDefault();this.classList.add('drag-over')"
+                  ondragleave="this.classList.remove('drag-over')"
+                  ondrop="this.classList.remove('drag-over');handleSlotDrop(event,'back')">
+                  <span class="upload-ico">🔄</span>
+                  <div class="upload-t">Back / Ingredients</div>
+                  <div class="upload-sub">Click or drop</div>
+                </div>
+                <input type="file" id="sfileBack" accept="image/*" style="display:none"
+                  onchange="setSlotImage('back', this.files[0]); this.value='';">
+                <!-- Per-slot preview -->
+                <div class="slot-preview" id="prevBack">
+                  <img id="imgBack" alt="back preview">
+                  <button class="slot-preview-clear" onclick="clearSlot('back')" title="Remove">✕</button>
+                </div>
+              </div>
+
+            </div><!-- /.upload-slots -->
+
+            <!-- Scan Now button: appears once ≥1 image is ready -->
+            <button class="scan-now-btn" id="scanNowBtn" onclick="triggerMultiScan()">
+              ✦ Scan Product
+            </button>
+          </div><!-- /#uploadArea -->
+
+          <!-- Scanning progress -->
+          <div class="scan-progress" id="scanProgress">
+            <div class="scan-prog-label" id="scanLabel">✦ Vera is analysing your product…</div>
+            <div class="scan-bar-track"><div class="scan-bar-fill"></div></div>
           </div>
-          <input type="file" id="sfile" accept="image/*" style="display:none" onchange="doScan(event)">
-          <div class="sprev" id="sprev"><img id="simg" alt="product"></div>
+
+          <!-- Result card -->
           <div class="res-card" id="rescard">
-            <div class="verd" id="verdict"></div>
-            <div
-              style="width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--rose),transparent);margin:8px 0">
+            <!-- Header: verdict -->
+            <div class="res-header">
+              <div class="res-icon" id="resIcon"></div>
+              <div>
+                <div class="verd" id="verdict"></div>
+                <div class="reas" id="reason"></div>
+              </div>
             </div>
-            <div class="reas" id="reason"></div>
+            <!-- Extracted details -->
+            <div class="res-details" id="resDetails"></div>
           </div>
+
+          <!-- Scan again -->
+          <button class="scan-again-btn" id="scanAgainBtn"
+            onclick="resetScan()">✦ Scan Another Product</button>
+
         </div>
       </div>
 
@@ -1205,20 +1795,6 @@
     </div>
   </div>
 
-  <!-- MODAL -->
-  <div class="moverlay" id="modal">
-    <div class="mbox">
-      <h3>API Key</h3>
-      <p>Get your free key at <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> — no credit
-        card needed. This unlocks Vera's full AI capabilities.</p>
-      <input class="min" id="mkey" type="password" placeholder="AIzaSy… paste your key here">
-      <div class="mbtns">
-        <button class="mcancel" onclick="closeModal()">Cancel</button>
-        <button class="msave" onclick="saveKey()">Activate Vera</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // ═════════════════════════════════════════
     // VERA ANIMATION ENGINE — Realistic Motion
@@ -1227,7 +1803,8 @@
     let talking = false;
     let emo = 'neutral';
     let voiceOn = true;
-    let gemKey = localStorage.getItem('ss_gk') || '';
+    let gemKey = 'AIzaSyB0EBmM8_byMT6725DOyGyv7NwM1zpug_E';
+    let lastScanId = '';
     let listening = false;
     let recog = null;
 
@@ -1526,25 +2103,36 @@
     }
 
     async function askGemini(q) {
-      if (!gemKey) return getFallback(q);
+      setSt('Vera is thinking…'); setEmo('think');
       try {
-        const r = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${gemKey}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              system_instruction: {
-                parts: [{ text: "You are Vera, an elegant and intelligent AI beauty companion for ScanSure — a luxury cosmetic product verification platform in India. Help users verify product authenticity, understand ingredients, get skincare advice, and find genuine products. Be warm, sophisticated and concise — under 60 words. Speak naturally." }]
-              },
-              contents: [{ parts: [{ text: q }] }]
-            })
-          }
-        );
-        if (!r.ok) return getFallback(q);
+        const r = await fetch('http://127.0.0.1:8000/api/chat/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: q,
+            scan_id: lastScanId
+          })
+        });
+        if (!r.ok) {
+          const err = await r.json();
+          return err.error || "I'm having trouble connecting to my brain. Please check if the backend is running.";
+        }
         const d = await r.json();
-        return d.candidates?.[0]?.content?.parts?.[0]?.text || getFallback(q);
-      } catch { return getFallback(q); }
+        return d.reply;
+      } catch (e) {
+        return "System error: " + e.message;
+      }
+    }
+
+    async function loadChatHistory(scanId) {
+      try {
+        const r = await fetch(`http://127.0.0.1:8000/api/chat/?scan_id=${scanId}`);
+        if (!r.ok) return;
+        const history = await r.json();
+        const msgs = document.getElementById('msgs');
+        msgs.innerHTML = ''; // Clear for new scan context
+        history.forEach(m => addMsg(m.role, m.content));
+      } catch (e) { console.error("History load error:", e); }
     }
 
     // ── Chat ──
@@ -1605,64 +2193,269 @@
     // ── Scan ──
     function openScanTab() { swTab('scan', document.querySelectorAll('.tab')[1]); }
 
-    async function doScan(e) {
-      const file = e.target.files[0]; if (!file) return;
-      const sprev = document.getElementById('sprev');
-      document.getElementById('simg').src = URL.createObjectURL(file);
-      sprev.style.display = 'block';
-      const rc = document.getElementById('rescard');
-      const vd = document.getElementById('verdict');
-      const rs = document.getElementById('reason');
-      rc.style.display = 'block'; rc.className = 'res-card chk';
-      vd.textContent = 'Vera is analysing…'; rs.textContent = '';
-      setSt('Scanning product…'); talking = true; setEmo('think');
+    // Slot state
+    const slotFiles = { front: null, back: null };
 
-      if (!gemKey) {
-        setTimeout(() => {
-          talking = false; setEmo('neutral');
-          rc.className = 'res-card fake';
-          vd.textContent = '⚠ Analysis Requires API Key';
-          rs.textContent = 'Add your free Gemini API key using the ✦ button above for full AI product scanning.';
-          setSt('Vera is ready');
-        }, 1800);
-        return;
+    function setSlotImage(slot, file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      slotFiles[slot] = file;
+      const imgEl  = document.getElementById(slot === 'front' ? 'imgFront' : 'imgBack');
+      const prevEl = document.getElementById(slot === 'front' ? 'prevFront' : 'prevBack');
+      const boxEl  = document.getElementById(slot === 'front' ? 'boxFront' : 'boxBack');
+      imgEl.src = URL.createObjectURL(file);
+      prevEl.style.display = 'block';
+      boxEl.classList.add('has-image');
+      updateScanNowBtn();
+    }
+
+    function clearSlot(slot) {
+      slotFiles[slot] = null;
+      const imgEl  = document.getElementById(slot === 'front' ? 'imgFront' : 'imgBack');
+      const prevEl = document.getElementById(slot === 'front' ? 'prevFront' : 'prevBack');
+      const boxEl  = document.getElementById(slot === 'front' ? 'boxFront' : 'boxBack');
+      imgEl.src = '';
+      prevEl.style.display = 'none';
+      boxEl.classList.remove('has-image');
+      updateScanNowBtn();
+    }
+
+    function updateScanNowBtn() {
+      const hasAny = slotFiles.front || slotFiles.back;
+      const btn = document.getElementById('scanNowBtn');
+      btn.classList.toggle('visible', !!hasAny);
+      // Update button text to show how many images are ready
+      const count = (slotFiles.front ? 1 : 0) + (slotFiles.back ? 1 : 0);
+      btn.textContent = `✦ Scan Product (${count} image${count > 1 ? 's' : ''})`;
+    }
+
+    function triggerMultiScan() {
+      const files = [];
+      if (slotFiles.front) files.push(slotFiles.front);
+      if (slotFiles.back)  files.push(slotFiles.back);
+      if (files.length === 0) return;
+      startScan(files);
+    }
+
+    // Chat tab: multi-file picker → immediately scan
+    function doChatMultiScan(e) {
+      const files = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
+      if (files.length === 0) return;
+      openScanTab();
+      // Auto-assign front and back from chat picker
+      if (files[0]) setSlotImage('front', files[0]);
+      if (files[1]) setSlotImage('back',  files[1]);
+      e.target.value = '';
+    }
+
+    // Drag-and-drop onto a specific slot
+    function handleSlotDrop(e, slot) {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) setSlotImage(slot, file);
+    }
+
+    function resetScan() {
+      // Clear slot state
+      slotFiles.front = null;
+      slotFiles.back  = null;
+      clearSlot('front');
+      clearSlot('back');
+      document.getElementById('uploadArea').style.display = 'block';
+      document.getElementById('rescard').style.display = 'none';
+      document.getElementById('scanProgress').classList.remove('show');
+      document.getElementById('scanAgainBtn').style.display = 'none';
+      document.getElementById('scanNowBtn').classList.remove('visible');
+    }
+
+    function setScanProgress(label) {
+      const p = document.getElementById('scanProgress');
+      p.classList.add('show');
+      document.getElementById('scanLabel').textContent = label;
+    }
+
+    function buildDetailsHTML(data) {
+      const row = (icon, label, content) => `
+        <div class="det-row">
+          <div class="det-icon">${icon}</div>
+          <div class="det-content">
+            <div class="det-label">${label}</div>
+            <div class="det-value">${content}</div>
+          </div>
+        </div>`;
+      const missingRow = (icon, label) => `
+        <div class="det-row">
+          <div class="det-icon">${icon}</div>
+          <div class="det-content">
+            <div class="det-label">${label}</div>
+            <div class="det-value missing">Not detected</div>
+          </div>
+        </div>`;
+
+      let html = `<div class="det-section-title">Product Details</div>`;
+      html += data.brand       ? row('🏷️','Brand', data.brand)            : missingRow('🏷️','Brand');
+      html += data.product_name? row('🧴','Product Name', data.product_name): missingRow('🧴','Product Name');
+
+      html += `<div class="res-divider"></div><div class="det-section-title">Label Information</div>`;
+      html += data.batch_number? row('🔢','Batch / Lot No.', data.batch_number): missingRow('🔢','Batch / Lot No.');
+      html += data.expiry_date ? row('📅','Expiry / MFG Date', data.expiry_date): missingRow('📅','Expiry / MFG Date');
+      html += data.barcode     ? row('📊','Barcode / EAN', data.barcode)        : missingRow('📊','Barcode / EAN');
+      html += data.mrp         ? row('💰','MRP', data.mrp)                      : missingRow('💰','MRP');
+
+      html += `<div class="res-divider"></div><div class="det-section-title">Ingredients</div>`;
+      if (data.ingredients && data.ingredients.length > 0) {
+        html += `<div class="det-row">
+          <div class="det-icon">🧪</div>
+          <div class="det-content">
+            <div class="det-label">Detected Ingredients</div>
+            <div class="ing-chips">${data.ingredients.map(i => `<span class="ing-chip">${i}</span>`).join('')}</div>
+          </div>
+        </div>`;
+      } else {
+        html += missingRow('🧪','Ingredients');
       }
+
+      if (data.warnings && data.warnings.length > 0) {
+        html += `<div class="res-divider"></div><div class="det-section-title">Warnings</div>`;
+        html += row('⚠️','Noted Warnings', data.warnings.join(' · '));
+      }
+
+      // Saved to DB + model prediction badge
+      if (data.saved_to_db) {
+        const confPct = data.model_confidence != null
+          ? ` &mdash; ${(data.model_confidence * 100).toFixed(1)}% confidence`
+          : '';
+        const srcTag = data.prediction_source === 'heuristic' ? ' (rule-based)' : ' (ML model)';
+        const predBadge = data.model_prediction
+          ? `<span style="font-weight:700;color:${data.model_prediction==='Real'?'#166534':'#991b1b'}">${data.model_prediction}</span>${confPct}${srcTag}`
+          : '';
+        const dbLabel = data.record_id
+          ? `Saved &mdash; ID: <span style="font-family:monospace;font-size:10px;opacity:.7">${data.record_id}</span>`
+          : 'Saved to MongoDB';
+        html += `<div class="res-divider"></div>
+          <div class="det-row">
+            <div class="det-icon">🤖</div>
+            <div class="det-content">
+              <div class="det-label">ML Prediction</div>
+              <div class="det-value" style="font-size:12px">${predBadge || 'N/A'}</div>
+            </div>
+          </div>
+          <div class="det-row">
+            <div class="det-icon">🗄️</div>
+            <div class="det-content">
+              <div class="det-label">Backend Record</div>
+              <div class="det-value" style="color:var(--rose);font-size:11.5px">${dbLabel}</div>
+            </div>
+          </div>`;
+        if (data.ai_tip) {
+          html += `<div class="res-divider"></div>
+            <div class="det-row">
+              <div class="det-icon">✨</div>
+              <div class="det-content">
+                <div class="det-label">Vera's AI Tip</div>
+                <div class="det-value" style="font-size:12px; font-style: italic; color: var(--rose)">${data.ai_tip}</div>
+              </div>
+            </div>`;
+        }
+      }
+      return html;
+    }
+
+    /**
+     * startScan — accepts an array of File objects (front, back, …)
+     * Sends all images to Gemini in a single request, then POSTs all
+     * to the Django backend as image_front, image_back, …
+     */
+    async function startScan(files) {
+      if (!Array.isArray(files)) files = [files];
+
+      document.getElementById('uploadArea').style.display = 'none';
+      document.getElementById('rescard').style.display = 'none';
+      document.getElementById('scanAgainBtn').style.display = 'none';
+
+      setSt(`Scanning ${files.length} image${files.length > 1 ? 's' : ''}…`);
+      talking = true; setEmo('think');
+
+      const imageCount = files.length;
+      setScanProgress(`📤 Analyzing ${imageCount} image${imageCount > 1 ? 's' : ''} with OCR & AI…`);
 
       try {
-        const b64 = await toB64(file);
-        const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${gemKey}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                parts: [
-                  { text: 'You are a cosmetic product authenticator. Examine this product image carefully. Check packaging quality, font sharpness, logo precision, label alignment, seal integrity, colour accuracy. Respond ONLY in this exact format:\nVERDICT: REAL\nREASON: one sentence explaining why\n\nOR\n\nVERDICT: FAKE\nREASON: one sentence about what looks suspicious' },
-                  { inline_data: { mime_type: file.type, data: b64 } }
-                ]
-              }]
-            })
-          }
-        );
-        if (!res.ok) throw new Error('API error');
-        const d = await res.json();
-        const txt = d.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        const isReal = txt.includes('VERDICT: REAL');
-        const reason = txt.split('REASON:')[1]?.trim() || txt;
+        const fd = new FormData();
+        const fieldNames = ['image_front', 'image_back', 'image_3', 'image_4', 'image_5'];
+        files.forEach((f, i) => fd.append(fieldNames[i] || `image_${i+1}`, f));
+        
+        const backendRes = await fetch('http://127.0.0.1:8000/api/scan/', {
+          method: 'POST', body: fd
+        });
+        
+        if (!backendRes.ok) throw new Error('Backend error ' + backendRes.status);
+        const data = await backendRes.json();
+
+        // ── Step 3: Render result card ──
+        document.getElementById('scanProgress').classList.remove('show');
+        const rc = document.getElementById('rescard');
+        rc.style.display = 'block';
+
+        const isReal = (data.ai_verdict || data.model_prediction || '').toUpperCase() === 'REAL';
         rc.className = 'res-card ' + (isReal ? 'real' : 'fake');
-        vd.textContent = isReal ? '✦ Authentic Product' : '⚠ Counterfeit Detected';
-        rs.textContent = reason;
-        addMsg('vera', `Scan complete — ${isReal ? '✦ Authentic' : '⚠ Counterfeit'}: ${reason}`);
-        speakVera(isReal ? 'Great news — this product is authentic!' : 'Warning — this product may be counterfeit. Please be careful.');
+        document.getElementById('resIcon').textContent = isReal ? '✦' : '⚠';
+        document.getElementById('verdict').textContent = isReal ? 'Authentic Product' : 'Counterfeit Detected';
+        
+        const reasonStr = data.ai_reason || data.model_prediction + " (ML Confidence: " + (data.model_confidence*100).toFixed(1) + "%)";
+        document.getElementById('reason').textContent = reasonStr;
+
+        document.getElementById('resDetails').innerHTML = buildDetailsHTML({
+          brand:        data.brand,
+          product_name: data.product,
+          batch_number: data.batch,
+          barcode:      data.barcode,
+          ingredients:  data.ingredients || [],
+          saved_to_db:  true,
+          record_id:    data.id,
+          model_prediction:  data.model_prediction,
+          model_confidence:  data.model_confidence,
+          prediction_source: data.prediction_source,
+          ai_tip:       data.ai_tip
+        });
+        document.getElementById('scanAgainBtn').style.display = 'block';
+
+        const brand = data.brand || 'the product';
+        const tipStr = data.ai_tip ? ` <br><br><b>Vera's Tip:</b> ${data.ai_tip}` : '';
+        addMsg('vera', (isReal
+          ? `✦ ${brand} — Authentic! ${reasonStr}${tipStr}`
+          : `⚠ ${brand} — Counterfeit detected. ${reasonStr}${tipStr}`));
+        
+        speakVera(isReal 
+          ? `Great news! ${brand} appears to be authentic. ${data.ai_tip || ''}`
+          : `Warning — this ${brand} may be counterfeit. ${data.ai_tip || ''}`);
+        
         setEmo(isReal ? 'happy' : 'wow');
-        setTimeout(() => setEmo('neutral'), 4000);
-      } catch {
-        rc.className = 'res-card fake';
-        vd.textContent = 'Scan Failed';
-        rs.textContent = 'Please check your API key and internet connection.';
+        lastScanId = data.id;
+        loadChatHistory(lastScanId);
+        setTimeout(() => setEmo('neutral'), 5000);
+
+      } catch (err) {
+        document.getElementById('scanProgress').classList.remove('show');
+        const rc = document.getElementById('rescard');
+        rc.style.display = 'block'; rc.className = 'res-card fake';
+        document.getElementById('resIcon').textContent = '✕';
+        document.getElementById('verdict').textContent = 'Scan Failed';
+        document.getElementById('reason').textContent  = err.message || 'Check connection';
+        document.getElementById('resDetails').innerHTML = '';
+        document.getElementById('scanAgainBtn').style.display = 'block';
       }
-      talking = false; setSt('Vera is ready');
+
+      talking = false;
+      setSt('Vera is ready');
+    }
+
+    // Merge two ingredient arrays, deduplicate
+    function mergeIngredients(backendList, aiList) {
+      const combined = [];
+      if (Array.isArray(backendList)) backendList.forEach(i => { if(i) combined.push(i); });
+      if (Array.isArray(aiList))      aiList.forEach(i => {
+        if (i && !combined.some(c => c.toLowerCase() === i.toLowerCase())) combined.push(i);
+      });
+      return combined;
     }
 
     function toB64(f) {
@@ -1695,20 +2488,6 @@
       });
     }
 
-    // ── Modal ──
-    function openModal() { document.getElementById('modal').classList.add('open'); }
-    function closeModal() { document.getElementById('modal').classList.remove('open'); }
-    function saveKey() {
-      const k = document.getElementById('mkey').value.trim(); if (!k) return;
-      gemKey = k; localStorage.setItem('ss_gk', k); closeModal();
-      const b = document.getElementById('abtn');
-      b.textContent = '✦ Vera Active'; b.classList.add('active');
-      b.onclick = null;
-      addMsg('vera', "My full intelligence is now active! I can answer any beauty question and fully analyse your cosmetic products. What would you like to know?");
-      speakVera("I'm fully activated! How may I assist you today?");
-      setEmo('happy'); setTimeout(() => setEmo('neutral'), 3500);
-    }
-
     // ── Tabs ──
     function swTab(name, el) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
@@ -1717,11 +2496,6 @@
       document.getElementById('tc-' + name).classList.add('on');
     }
 
-    // ── Init ──
-    if (gemKey) {
-      const b = document.getElementById('abtn');
-      b.textContent = '✦ Vera Active'; b.classList.add('active');
-    }
 
     if (window.speechSynthesis) {
       window.speechSynthesis.getVoices();
@@ -1730,10 +2504,7 @@
 
     window.onload = () => {
       setTimeout(() => {
-        const greet = gemKey
-          ? "Welcome back! I'm Vera — how may I assist you today?"
-          : "Good day! I'm Vera, your AI beauty companion. I can answer your questions right now, and you can scan cosmetic products for authenticity. Add your Gemini key for full AI power!";
-        addMsg('vera', greet);
+        addMsg('vera', "Good day! I'm Vera, your AI beauty companion. Upload a product's front and back label to scan it for authenticity.");
         setEmo('happy');
         setTimeout(() => {
           speakVera("Good day! I'm Vera, your AI beauty companion.");
@@ -1741,6 +2512,190 @@
         }, 500);
       }, 600);
     };
+
+    // ── History Drawer ──────────────────────────────────────────────────────
+    let _historyData = [];
+
+    function openHistory() {
+      document.getElementById('histOverlay').classList.add('open');
+      fetchHistory();
+    }
+
+    function closeHistory() {
+      document.getElementById('histOverlay').classList.remove('open');
+    }
+
+    function closeHistoryOnBg(e) {
+      // Close only when clicking the dark backdrop, not the drawer itself
+      if (e.target === document.getElementById('histOverlay')) closeHistory();
+    }
+
+    async function fetchHistory() {
+      const body = document.getElementById('histBody');
+      body.innerHTML = '<div class="hist-spinner">✦</div>';
+      try {
+        const res = await fetch('http://127.0.0.1:8000/api/scan/');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        _historyData = Array.isArray(data) ? data : [];
+        renderHistory(_historyData);
+      } catch (err) {
+        body.innerHTML = `<div class="hist-empty">⚠ Could not reach backend.<br><small style="font-size:11px;opacity:.6">${err.message}</small><br>Make sure Django is running on port 8000.</div>`;
+        document.getElementById('histCount').textContent = 'offline';
+      }
+    }
+
+    function renderHistory(records) {
+      const body   = document.getElementById('histBody');
+      const count  = document.getElementById('histCount');
+      count.textContent = `${records.length} record${records.length !== 1 ? 's' : ''}`;
+
+      if (records.length === 0) {
+        body.innerHTML = '<div class="hist-empty">No scan records found in the database yet.</div>';
+        return;
+      }
+
+      body.innerHTML = '';
+
+      records.forEach(r => {
+        const label   = (r.prediction_label || '').toLowerCase();
+        const isReal  = label === 'real';
+        const isFake  = label === 'fake';
+        const cls     = isReal ? 'real' : isFake ? 'fake' : 'unknown';
+        const badge   = isReal ? '✦ Real' : isFake ? '⚠ Fake' : r.prediction_label || 'Unknown';
+        const conf    = r.confidence_score != null
+          ? `${(r.confidence_score * 100).toFixed(1)}%`
+          : '';
+
+        // Format timestamp
+        let timeStr = '';
+        if (r.timestamp) {
+          try {
+            const d = new Date(r.timestamp);
+            timeStr = d.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+          } catch { timeStr = r.timestamp; }
+        }
+
+        // Ingredient chips (show up to 8)
+        const ings = Array.isArray(r.ingredients) ? r.ingredients.slice(0, 8) : [];
+        const ingChips = ings.length
+          ? `<div class="hrec-chips">${ings.map(i => `<span class="hrec-chip">${i}</span>`).join('')}${r.ingredients.length > 8 ? `<span class="hrec-chip">+${r.ingredients.length - 8} more</span>` : ''}</div>`
+          : '<span class="hrec-val missing">None detected</span>';
+
+        const card = document.createElement('div');
+        card.className = `hrec ${cls}`;
+        card.innerHTML = `
+          <div class="hrec-head">
+            <span class="hrec-badge ${cls}">${badge}</span>
+            <span class="hrec-brand">${r.brand || r.product || 'Unknown Product'}</span>
+            <span class="hrec-conf">${conf}</span>
+            <span class="hrec-view-hint">View →</span>
+          </div>
+          <div class="hrec-body">
+            <div class="hrec-row">
+              <span class="hrec-lbl">Product</span>
+              <span class="hrec-val ${r.product ? '' : 'missing'}">${r.product || 'Not detected'}</span>
+            </div>
+            <div class="hrec-row">
+              <span class="hrec-lbl">Barcode</span>
+              <span class="hrec-val ${r.barcode ? '' : 'missing'}">${r.barcode || 'Not detected'}</span>
+            </div>
+            <div class="hrec-row">
+              <span class="hrec-lbl">Batch</span>
+              <span class="hrec-val ${r.batch ? '' : 'missing'}">${r.batch || 'Not detected'}</span>
+            </div>
+            <div class="hrec-row" style="align-items:flex-start">
+              <span class="hrec-lbl">Ingredients</span>
+              <div style="flex:1">${ingChips}</div>
+            </div>
+            <div class="hrec-row" style="margin-top:2px">
+              <span class="hrec-lbl">DB ID</span>
+              <span class="hrec-val" style="font-family:monospace;font-size:10px;opacity:.6">${r.id || '—'}</span>
+            </div>
+          </div>
+          ${timeStr ? `<div class="hrec-time">🕐 ${timeStr}</div>` : ''}
+        `;
+        card.onclick = () => viewScanRecord(r);
+        body.appendChild(card);
+      });
+    }
+
+    function downloadHistory() {
+      if (_historyData.length === 0) {
+        addMsg('vera', 'Please load the scan history first by clicking the refresh button.');
+        return;
+      }
+      const blob = new Blob([JSON.stringify(_historyData, null, 2)], { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = `scansure_history_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ── View a history record in the main scan result card ──
+    function viewScanRecord(r) {
+      closeHistory();
+
+      // Switch to SCAN tab
+      swTab('scan', document.querySelectorAll('.tab')[1]);
+
+      // Hide upload area, show result card
+      document.getElementById('uploadArea').style.display = 'none';
+      document.getElementById('scanProgress').classList.remove('show');
+      document.getElementById('scanAgainBtn').style.display = 'block';
+      document.getElementById('scanNowBtn').classList.remove('visible');
+
+      const label   = (r.prediction_label || '').toLowerCase();
+      const isReal  = label === 'real';
+      const isFake  = label === 'fake';
+      const conf    = r.confidence_score != null
+        ? ` (${(r.confidence_score * 100).toFixed(1)}%)` : '';
+
+      // Format timestamp for reason line
+      let timeStr = '';
+      if (r.timestamp) {
+        try {
+          timeStr = new Date(r.timestamp).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+        } catch { timeStr = r.timestamp; }
+      }
+
+      const rc = document.getElementById('rescard');
+      rc.style.display = 'block';
+      rc.className = 'res-card ' + (isReal ? 'real' : isFake ? 'fake' : 'chk');
+
+      document.getElementById('resIcon').textContent    = isReal ? '✦' : isFake ? '⚠' : '📋';
+      document.getElementById('verdict').textContent    = isReal ? 'Authentic Product' : isFake ? 'Counterfeit Detected' : 'Scan Record';
+      document.getElementById('reason').textContent     = `Loaded from database${conf}${timeStr ? ' · ' + timeStr : ''}`;
+      document.getElementById('resDetails').innerHTML   = buildDetailsHTML({
+        brand:        r.brand,
+        product_name: r.product,
+        batch_number: r.batch,
+        barcode:      r.barcode,
+        ingredients:  r.ingredients || [],
+        saved_to_db:  true,
+        record_id:    r.id,
+        model_prediction:  r.prediction_label,
+        model_confidence:  r.confidence_score,
+        prediction_source: 'model'
+      });
+
+      // Vera commentary
+      const brand = r.brand || r.product || 'this product';
+      addMsg('vera', isReal
+        ? `✦ Showing saved record for ${brand} — marked Authentic${conf}.`
+        : isFake
+        ? `⚠ Showing saved record for ${brand} — marked Counterfeit${conf}.`
+        : `Showing saved scan record for ${brand}.`);
+      setEmo(isReal ? 'happy' : isFake ? 'wow' : 'neutral');
+      
+      // Set context and load history
+      lastScanId = r.id;
+      loadChatHistory(lastScanId);
+
+      setTimeout(() => setEmo('neutral'), 3000);
+    }
   </script>
 </body>
 

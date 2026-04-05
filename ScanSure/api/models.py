@@ -4,7 +4,8 @@ from datetime import datetime
 class ScanResult(Document):
     # This class inherits from Document, not models.Model 
     # Id is automatically injected by MongoEngine as a MongoDB ObjectId
-    image_path = StringField(required=True)
+    image_path = StringField(required=True)          # primary / front image (kept for backward compat)
+    image_paths = ListField(StringField(), default=list)  # all uploaded images (front, back, …)
     prediction_label = StringField(required=True)
     confidence_score = FloatField(required=True)
     
@@ -20,4 +21,15 @@ class ScanResult(Document):
     
     meta = {
         'collection': 'scan_results'
+    }
+
+class ChatLog(Document):
+    scan_id = StringField(null=True, blank=True)  # Links to ScanResult.id if available
+    role = StringField(required=True)             # 'user' or 'vera'
+    content = StringField(required=True)
+    timestamp = DateTimeField(default=datetime.utcnow)
+
+    meta = {
+        'collection': 'chat_logs',
+        'indexes': ['scan_id', 'timestamp']
     }
