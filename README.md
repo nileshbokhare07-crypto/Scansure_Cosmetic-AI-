@@ -1,4 +1,4 @@
-ScanSure AI 🧠✨
+ScanSure AI 🧠
 
 ScanSure AI is an advanced AI-powered cosmetic authenticity and skincare intelligence platform designed to detect fake beauty products and provide personalized skincare recommendations using artificial intelligence and computer vision.
 
